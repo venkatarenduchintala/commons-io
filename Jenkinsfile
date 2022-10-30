@@ -43,7 +43,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn package'
+                sh 'mvn package verify'
             }
         }
     }
