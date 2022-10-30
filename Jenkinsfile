@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn compile test -Dmaven.test.failure.ignore=true'
+                sh 'mvn compile test install -Dmaven.test.failure.ignore=true'
             }
             post {
                 always {
