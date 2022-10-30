@@ -32,6 +32,11 @@ pipeline {
             steps {
                 sh 'mvn compile test install -Dmaven.test.failure.ignore=true'
             }
+        }
+        stage('Code Quality') {
+            steps {
+                sh 'mvn test -Dmaven.test.failure.ignore=true'
+            }
             post {
                 always {
                     junit(testResults: '**/surefire-reports/*.xml', allowEmptyResults: true)
@@ -43,7 +48,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn package verify'
+                sh 'mvn install package verify'
+            }
+        }
+        stage('Archive the jars'){
+            steps {
+                archiveArtifacts artifacts: '\'target/*.jar, target/*.war\'', followSymlinks: false, onlyIfSuccessful: true
             }
         }
     }
