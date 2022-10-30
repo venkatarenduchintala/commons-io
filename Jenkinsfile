@@ -6,7 +6,9 @@ pipeline {
     }
     stages {
         stage('Preparation'){
-            sh 'mvn clean validate initialize'
+            steps{
+                sh 'mvn clean validate initialize'
+            }
         }
         stage('Build') {
             steps {
