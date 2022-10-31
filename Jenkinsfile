@@ -30,12 +30,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -T 4 compile'
+                sh 'mvn -T 2C compile'
             }
         }
         stage('Code Quality') {
             steps {
-                sh 'mvn -T 8 test -Dmaven.test.failure.ignore=true'
+                sh 'mvn -T 2C test -Dmaven.test.failure.ignore=true'
             }
             post {
                 always {
@@ -48,7 +48,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn -T 8 install package verify'
+                sh 'mvn -T 2C install package verify'
             }
         }
         stage('Archive the jars'){
