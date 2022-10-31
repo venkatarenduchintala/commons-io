@@ -45,7 +45,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'mvn -B -T 2.0C install package verify'
+                sh 'mvn -B -T 2.0C package verify'
             }
         }
         stage('Archive the jars'){
