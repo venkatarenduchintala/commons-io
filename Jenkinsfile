@@ -25,17 +25,17 @@ pipeline {
     stages {
         stage('Preparation'){
             steps{
-                sh 'mvn -T 2C clean validate initialize'
+                sh 'mvn clean validate initialize'
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn -T 2C compile'
+                sh 'mvn compile'
             }
         }
         stage('Code Quality') {
             steps {
-                sh 'mvn -T 2C test -Dmaven.test.failure.ignore=true'
+                sh 'mvn -test -Dmaven.test.failure.ignore=true'
             }
             post {
                 always {
@@ -48,7 +48,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh 'mvn -T 2C install package verify'
+                sh 'mvn install package verify'
             }
         }
         stage('Archive the jars'){
