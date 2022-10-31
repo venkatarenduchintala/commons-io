@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn compile test install -Dmaven.test.failure.ignore=true'
+                sh 'mvn compile'
             }
         }
         stage('Code Quality') {
