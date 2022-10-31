@@ -25,7 +25,7 @@ pipeline {
     stages {
         stage('Preparation'){
             steps{
-                sh 'mvn -T 4 clean validate initialize'
+                sh 'mvn -T 2C clean validate initialize'
             }
         }
         stage('Build') {
