@@ -30,12 +30,12 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -B -T 2.0C compile'
+                sh 'mvn -B -T 3.0C compile'
             }
         }
         stage('Code Quality') {
             steps {
-                sh 'mvn -B -T 2.0C test -Dmaven.test.failure.ignore=true'
+                sh 'mvn -B -T 3.0C test -Dmaven.test.failure.ignore=true'
             }
             post {
                 always {
@@ -44,9 +44,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {
-                branch 'master'
-            }
             steps {
                 sh 'mvn -B -T 2.0C install package verify'
             }
