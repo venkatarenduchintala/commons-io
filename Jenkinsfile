@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Archive the jars'){
             steps {
-                archiveArtifacts artifacts: '\'target/*.jar, target/*.war\'', followSymlinks: false, onlyIfSuccessful: true
+                archiveArtifacts artifacts: 'target/*.jar, target/*.war', followSymlinks: false, onlyIfSuccessful: true
             }
         }
     }
