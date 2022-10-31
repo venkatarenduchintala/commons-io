@@ -33,9 +33,9 @@ pipeline {
                 sh 'mvn -B -T 3.0C compile'
             }
         }
-        stage('Code Quality') {
+        stage('Code Quality and Deploy') {
             steps {
-                sh 'mvn -B -T 3.0C test -Dmaven.test.failure.ignore=true'
+                sh 'mvn -B -T 3.0C test -Dmaven.test.failure.ignore=true package verify'
             }
             post {
                 always {
@@ -43,11 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
-            steps {
-                sh 'mvn -B -T 2.0C package verify'
-            }
-        }
+
         stage('Archive the jars'){
             steps {
                 archiveArtifacts artifacts: 'target/*.jar, target/*.war', followSymlinks: false, onlyIfSuccessful: true
