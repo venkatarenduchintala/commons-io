@@ -1,0 +1,45 @@
+version: "3.9"
+
+networks:
+  jenkins:
+    driver: bridge
+
+services:
+  jenkins-server:
+    build:
+      context: .
+    depends_on:
+      - jenkins-docker
+    networks:
+      - jenkins
+    container_name: consor-jenkins-blueocean
+    restart: on-failure
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins-data:/var/jenkins_home:rw
+      - ./jenkins-docker-certs:/certs/client:ro
+      - ./extras:/extras:rw
+  
+  jenkins-docker:
+    image: docker:dind
+    command: --storage-driver=overlay2
+    networks:
+      jenkins:
+        aliases:
+          - docker
+    container_name: jenkins-docker
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    ports:
+      - "2376:2376"
+    volumes:
+      - ./jenkins-docker-certs:/certs/client
+      - ./jenkins-data:/var/jenkins_home
+      - ./extras:/extras
